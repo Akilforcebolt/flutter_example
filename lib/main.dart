@@ -10,19 +10,17 @@ import 'pages/auth/login_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if(kIsWeb){
-  await Firebase.initializeApp(
-      options: FirebaseOptions(
-          apiKey: Constants.apiKey,
-          appId: Constants.appId,
-          messagingSenderId: Constants.messagingSenderId,
-          projectId: Constants.projectId));
-  }
-  else{
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: Constants.apiKey,
+            appId: Constants.appId,
+            messagingSenderId: Constants.messagingSenderId,
+            projectId: Constants.projectId));
+  } else {
     await Firebase.initializeApp();
   }
   runApp(const Myapp());
-
 }
 
 class Myapp extends StatefulWidget {
@@ -41,11 +39,11 @@ class _MyappState extends State<Myapp> {
     getUserLoggedInStatus();
   }
 
-  getUserLoggedInStatus()async{
-    await HelperFunction.getUserLoggedInStatus().then((value){
-      if(value!=null){
+  getUserLoggedInStatus() async {
+    await HelperFunction.getUserLoggedInStatus().then((value) {
+      if (value != null) {
         setState(() {
-        _isSignedIn=value;
+          _isSignedIn = value;
         });
       }
     });
@@ -55,11 +53,10 @@ class _MyappState extends State<Myapp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Constants().primaryColor,
-        scaffoldBackgroundColor: Colors.white
-      ),
+          primaryColor: Constants().primaryColor,
+          scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
-      home: _isSignedIn? const HomePage(): const LoginPage(),
+      home: _isSignedIn ? const HomePage() : const LoginPage(),
     );
   }
 }
